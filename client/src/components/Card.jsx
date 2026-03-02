@@ -15,7 +15,11 @@ function Card({ id, name, price, category, description, image }) {
         <h4>{name}</h4>
         <p>{description}</p>
         <h6>{price}$</h6>
-        <button onClick={() => (isInCart ? remove(id) : add(id))}>
+        <button
+          onClick={() =>
+            isInCart ? remove(id) : add({ id, name, category, price })
+          }
+        >
           {isInCart ? "Remove" : "Add"}
         </button>
       </section>

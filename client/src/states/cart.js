@@ -3,11 +3,15 @@ import { create } from "zustand";
 export const useCart = create((set) => ({
   products: {},
 
-  add: (id) =>
+  add: (product) =>
     set((state) => {
+      const { id, name, category, price } = product;
       if (state.products[id]) return state;
       return {
-        products: { ...state.products, [id]: true },
+        products: {
+          ...state.products,
+          [id]: { id, name, category, price },
+        },
       };
     }),
   remove: (id) =>
