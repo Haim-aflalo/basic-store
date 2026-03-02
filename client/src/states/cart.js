@@ -1,8 +1,23 @@
 import { create } from "zustand";
 
 export const useCart = create((set) => ({
-  count: 0,
-  add: () => set((state) => ({ count: state.count + 1 })),
-  remove: () => set((state) => ({ count: state.count - 1 })),
-  reset: () => set({ count: 0 }),
+  products: {},
+
+  add: (id) =>
+    set((state) => {
+      if (state.products[id]) return state;
+      return {
+        products: { ...state.products, [id]: true },
+      };
+    }),
+
+  remove: (id) =>
+    set((state) => {
+      if (!state.products[id]) return state;
+      const newProducts = { ...state.products };
+      delete newProducts[id];
+      return { products: newProducts };
+    }),
+
+  reset: () => set({ products: {} }),
 }));

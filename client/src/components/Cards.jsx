@@ -9,7 +9,6 @@ function Cards() {
     async function fetchData() {
       try {
         const response = await axios.get("http://localhost:3000/products");
-        console.log(response.data);
         setProduct(response.data);
       } catch (error) {
         console.error("Fetch failed:", error);
@@ -24,6 +23,7 @@ function Cards() {
         {products.map((product) => (
           <li key={product.id}>
             <Card
+              id={product.id}
               image={product.image}
               category={product.category}
               name={product.name}

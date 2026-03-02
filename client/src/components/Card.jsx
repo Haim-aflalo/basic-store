@@ -1,32 +1,23 @@
-import { useState } from "react";
 import { useCart } from "../states/cart";
 
-function Card(props) {
-  const [flag, setFlag] = useState(true);
+function Card({ id, name, price, category, description, image }) {
+  const products = useCart((state) => state.products);
   const add = useCart((state) => state.add);
   const remove = useCart((state) => state.remove);
-  const { name, price, category, description, image } = props;
-  function addToCart() {
-    add();
-    setFlag(false);
-  }
-  function removeFromCart() {
-    remove();
-    setFlag(true);
-  }
+
+  const isInCart = !!products[id];
+
   return (
-    <div>
+    <div className="card">
       <h1>{image}</h1>
       <section className="card-infos">
         <p>{category}</p>
         <h4>{name}</h4>
         <p>{description}</p>
         <h6>{price}$</h6>
-        {flag ? (
-          <button onClick={addToCart}>Add to cart</button>
-        ) : (
-          <button onClick={removeFromCart}>remove from cart</button>
-        )}
+        <button onClick={() => (isInCart ? remove(id) : add(id))}>
+          {isInCart ? "Remove" : "Add"}
+        </button>
       </section>
     </div>
   );
